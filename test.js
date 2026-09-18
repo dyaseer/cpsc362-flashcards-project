@@ -1,23 +1,23 @@
 class Flashcard {
     constructor(term, def) {
-        this.term = term;
-        this.def = def;
+        this._term = term;
+        this._def = def;
     }
 
     get term() {
-        return this.term;
+        return this._term;
     }
 
     get def() {
-        return this.def;
+        return this._def;
     }
 
     set term(newTerm) {
-        this.term = newTerm;
+        this._term = newTerm;
     }
 
     set def(newDef) {
-        this.def = newDef;
+        this._def = newDef;
     }
 }
 
