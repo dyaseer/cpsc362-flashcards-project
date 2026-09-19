@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="cpsc362-flashcards-project.vcxproj" Id="32ed5d1a-978d-4bfb-85d4-ecac6cdb55d2" />
+</Solution>
