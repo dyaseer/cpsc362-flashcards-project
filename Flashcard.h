@@ -5,7 +5,7 @@
 
 class Flashcard {
 public:
-	Flashcard(std::string newTerm = "", std::string newDef = "");
+	Flashcard(std::string newTerm = "", std::string newDef = ""): term(newTerm), def(newDef), flipped(false){};
 
 	std::string getTerm() const;
 	std::string getDef() const;

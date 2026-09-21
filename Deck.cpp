@@ -11,7 +11,7 @@ void Deck::addFlashcard(Flashcard newCard) {
 }
 
 void Deck::printDeck() const {
-	cout << "Printing flashcards..." << endl;
+	cout << "Printing flashcards in " << name << endl;
 	for (const auto& card : deck) {
 		cout << card.getTerm() << ": " << card.getDef() << endl;
 	}

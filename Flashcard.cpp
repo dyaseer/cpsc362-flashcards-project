@@ -3,8 +3,6 @@
 
 using namespace std;
 
-Flashcard::Flashcard(string newTerm, string newDef) : term(newTerm), def(newDef) {}
-
 string Flashcard::getTerm() const {
 	return term;
 }
