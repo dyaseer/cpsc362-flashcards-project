@@ -13,6 +13,10 @@ string Flashcard::getDef() const {
 	return def;
 }
 
+bool Flashcard::isFlipped() const {
+	return flipped;
+}
+
 void Flashcard::setTerm(string newTerm) {
 	term = newTerm;
 }

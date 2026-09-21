@@ -9,7 +9,7 @@ public:
 
 	std::string getTerm() const;
 	std::string getDef() const;
-
+	bool isFlipped() const;
 
 	void setTerm(std::string newTerm);
 	void setDef(std::string newDef);
@@ -17,6 +17,7 @@ public:
 private:
 	std::string term;
 	std::string def;
+	bool flipped;
 };
 
 #endif
