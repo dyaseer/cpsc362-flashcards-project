@@ -1,7 +1,8 @@
 class Flashcard {
-    constructor(term, def) {
+    constructor(term, def, hint) {
         this._term = term;
         this._def = def;
+        this._hint = hint;
     }
 
     get term() {
@@ -18,6 +19,10 @@ class Flashcard {
 
     set def(newDef) {
         this._def = newDef;
+    }
+
+    set hint(hint) {
+        this._hint = hint;
     }
 }
 
