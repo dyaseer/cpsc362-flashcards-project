@@ -21,12 +21,54 @@ class Flashcard {
     }
 }
 
+class FlashDeck {
+    constructor(name) {
+        this._name = name;
+        this._deck = new Map();
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get deck() {
+        return this._deck;
+    }
+
+    set name(newName) {
+        this._name = newName;
+    }
+
+    addcard(flashcard) {
+        this._deck.set(flashcard.term, flashcard);
+    }
+
+    removecard(flashcard) {
+        this._deck.delete(flashcard.term);
+    }
+
+
+}
+
 function test() {
     console.log("Running test...");
     
     newCard = new Flashcard("Destiny", "a predetermined course of events often held to be an irresistible power or agency");
 
+    newDeck = new FlashDeck("deck1");
+
+    console.log(newDeck.name);
+
+    newDeck.addcard(newCard);
+
+    console.log(newDeck.deck.get("Destiny"))
+
+    newDeck.removecard(newCard);
+
+
     console.log("Test finished.");
+
+
 }
 
 test();
