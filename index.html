@@ -4,16 +4,16 @@
 </head>
 <body>
     <h1>Flashcard Project</h1>
-    <p>This is a test.</p>
-
-    <form>
-        <input type="text" id="term" name="">
-        <input type="text" id="def">
-        <input type="submit" value="create">
+    <p>Enter a term and definition to create a flashcard.</p>
+ 
+    <form id="flashcard-form">
+        <input type="text" id="term-input" required>
+        <input type="text" id="def-input" required>
+        <input type="submit" id="create-btn">
     </form> 
 
-    <div id="cardContainer">
+    <div id="deck-container"></div>
 
-    </div>
+    <script src="test.js"></script>
 </body>
 </html>
