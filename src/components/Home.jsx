@@ -4,7 +4,7 @@ function Home() {
   return (
     <div style={{ padding: '20px' }}>
       <h1>Homepage</h1>
-      <p>This is a project for CPSC 362!!</p>
+      <p>Flashcards hosted online; no login, easy access, easily shareable.</p>
 
       {/*Container for deck preview thing*/}
       <h2>Popular Decks...</h2>
