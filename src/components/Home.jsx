@@ -1,4 +1,5 @@
 import React from 'react';
+import DeckPreview from './deckPreview';
 
 function Home() {
   return (
@@ -15,53 +16,31 @@ function Home() {
           gap: '12px'
         }}
       >
-        <div
-          style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '16px',
-              border: '1px solid #ccc',
-              borderRadius: '8px'
-          }}
-        >
-          <h3>Title</h3>
-          <p>Description</p>
-          <p>0</p>
-        </div>
-        
-        <div
-          style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '16px',
-              border: '1px solid #ccc',
-              borderRadius: '8px'
-          }}
-        >
-          <h3>Title</h3>
-          <p>Description</p>
-          <p>0</p>
-        </div>
-        
-        <div
-          style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '16px',
-              border: '1px solid #ccc',
-              borderRadius: '8px'
-          }}
-        >
-          <h3>Title</h3>
-          <p>Description</p>
-          <p>0</p>
-        </div>
+        <DeckPreview
+          title="CPSC 362"
+          desc="Software engineering."
+          count="28"
+        />
+        <DeckPreview
+          title="Math 150A"
+          desc="Calculus 1."
+          count="8"
+        />
+        <DeckPreview
+          title="Math 170A"
+          desc="Mathematical structures."
+          count="42"
+        />
+        <DeckPreview
+          title="Yay!!!"
+          desc="This works now."
+          count="0"
+        />
+        <DeckPreview
+          title="Project"
+          desc="Feed me dummy data."
+          count="0"
+        />
       </div>
     </div>
   );
