@@ -2,6 +2,15 @@ import { useEffect, useState } from 'react';
 import { deleteDeck, getDeck, updateDeck } from '../api';
 import DeckForm from './DeckForm';
 
+function shuffleIds(ids) {
+  const shuffled = [...ids];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 function DeckPage({ slug }) {
   const [deck, setDeck] = useState(null);
   const [ownerToken] = useState(() => {
@@ -15,6 +24,10 @@ function DeckPage({ slug }) {
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState('');
   const [revealedCards, setRevealedCards] = useState(new Set());
+  const [studying, setStudying] = useState(false);
+  const [studyOrder, setStudyOrder] = useState([]);
+  const [studyIndex, setStudyIndex] = useState(0);
+  const [studyRevealed, setStudyRevealed] = useState(false);
 
   useEffect(() => {
     const fragment = new URLSearchParams(window.location.hash.slice(1));
@@ -45,6 +58,8 @@ function DeckPage({ slug }) {
     try {
       const savedDeck = await updateDeck(slug, updatedDeck, ownerToken);
       setDeck(savedDeck);
+      setStudying(false);
+      setRevealedCards(new Set());
       setEditing(false);
       return true;
     } catch (requestError) {
@@ -76,6 +91,25 @@ function DeckPage({ slug }) {
     });
   }
 
+  function startStudy() {
+    if (!deck?.cards.length) return;
+    setStudyOrder(deck.cards.map((card) => card.id));
+    setStudyIndex(0);
+    setStudyRevealed(false);
+    setStudying(true);
+  }
+
+  function shuffleStudy() {
+    setStudyOrder((current) => shuffleIds(current));
+    setStudyIndex(0);
+    setStudyRevealed(false);
+  }
+
+  function moveStudy(direction) {
+    setStudyIndex((current) => Math.max(0, Math.min(current + direction, studyOrder.length - 1)));
+    setStudyRevealed(false);
+  }
+
   if (loading) return <main className="page"><p>Loading deck…</p></main>;
   if (error && !deck) {
     return (
@@ -86,6 +120,10 @@ function DeckPage({ slug }) {
     );
   }
   if (!deck) return null;
+
+  const currentStudyCard = studying
+    ? deck.cards.find((card) => card.id === studyOrder[studyIndex])
+    : null;
 
   return (
     <main className="page">
@@ -132,25 +170,80 @@ function DeckPage({ slug }) {
               This is a public deck. Editing is available only in the browser that created it.
             </p>
           )}
-          <section className="flashcard-list" aria-label="Flashcards">
-            {deck.cards.length === 0 && <p>This deck has no cards yet.</p>}
-            {deck.cards.map((card) => {
-              const isRevealed = revealedCards.has(card.id);
-              return (
-                <article className="flashcard" key={card.id}>
-                  <h2>{card.term}</h2>
-                  {isRevealed && <p>{card.definition}</p>}
-                  <button
-                    className="button button-secondary"
-                    type="button"
-                    onClick={() => toggleCard(card.id)}
-                  >
-                    {isRevealed ? 'Hide definition' : 'Show definition'}
-                  </button>
-                </article>
-              );
-            })}
-          </section>
+          {deck.cards.length > 0 && (
+            <div className="form-actions study-toolbar">
+              <button
+                className="button"
+                type="button"
+                onClick={() => studying ? setStudying(false) : startStudy()}
+              >
+                {studying ? 'Back to all cards' : 'Start Study Mode'}
+              </button>
+            </div>
+          )}
+          {studying && currentStudyCard ? (
+            <section className="panel study-panel" aria-label="Study mode">
+              <div className="study-topbar">
+                <strong>Card {studyIndex + 1} of {studyOrder.length}</strong>
+                <button className="button button-secondary" type="button" onClick={shuffleStudy}>
+                  Shuffle cards
+                </button>
+              </div>
+              <progress
+                className="study-progress"
+                value={studyIndex + 1}
+                max={studyOrder.length}
+                aria-label="Study progress"
+              />
+              <button
+                type="button"
+                className="study-card"
+                onClick={() => setStudyRevealed((value) => !value)}
+                aria-label={studyRevealed ? 'Show question' : 'Reveal answer'}
+              >
+                <span className="study-card-label">{studyRevealed ? 'ANSWER' : 'QUESTION'}</span>
+                <span className="study-card-content">
+                  {studyRevealed ? currentStudyCard.definition : currentStudyCard.term}
+                </span>
+                <span className="study-card-hint">Click to flip</span>
+              </button>
+              <div className="study-navigation">
+                <button
+                  className="button button-secondary"
+                  type="button"
+                  disabled={studyIndex === 0}
+                  onClick={() => moveStudy(-1)}
+                >
+                  Previous
+                </button>
+                {studyIndex === studyOrder.length - 1 ? (
+                  <button className="button" type="button" onClick={startStudy}>Study again</button>
+                ) : (
+                  <button className="button" type="button" onClick={() => moveStudy(1)}>Next</button>
+                )}
+              </div>
+            </section>
+          ) : (
+            <section className="flashcard-list" aria-label="Flashcards">
+              {deck.cards.length === 0 && <p>This deck has no cards yet.</p>}
+              {deck.cards.map((card) => {
+                const isRevealed = revealedCards.has(card.id);
+                return (
+                  <article className="flashcard" key={card.id}>
+                    <h2>{card.term}</h2>
+                    {isRevealed && <p>{card.definition}</p>}
+                    <button
+                      className="button button-secondary"
+                      type="button"
+                      onClick={() => toggleCard(card.id)}
+                    >
+                      {isRevealed ? 'Hide definition' : 'Show definition'}
+                    </button>
+                  </article>
+                );
+              })}
+            </section>
+          )}
         </>
       )}
     </main>

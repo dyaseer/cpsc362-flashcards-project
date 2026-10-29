@@ -1,0 +1,13 @@
+/* Study Mode styles: append to src/index.css */
+.study-toolbar { margin-bottom: 20px; }
+.study-panel { max-width: 720px; margin: 0 auto 32px; }
+.study-topbar, .study-navigation { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.study-progress { display: block; width: 100%; height: 12px; margin: 20px 0; accent-color: #3158b8; }
+.study-card { display: flex; width: 100%; min-height: 270px; flex-direction: column; align-items: center; justify-content: space-between; gap: 20px; padding: 32px 20px; border: 2px solid #cbd6eb; border-radius: 16px; background: #f3f6fd; color: #202735; cursor: pointer; text-align: center; }
+.study-card:hover { border-color: #3158b8; }
+.study-card:focus-visible { outline: 3px solid #3158b8; outline-offset: 3px; }
+.study-card-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; color: #526a9a; }
+.study-card-content { font-size: clamp(22px, 4vw, 32px); font-weight: 650; overflow-wrap: anywhere; }
+.study-card-hint { font-size: 13px; color: #526a9a; }
+.study-navigation { margin-top: 20px; }
+@media (max-width: 480px) { .study-card { min-height: 230px; } }
