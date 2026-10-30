@@ -17,7 +17,7 @@ function Home() {
   return (
     <main className="page">
       <header className="page-header">
-        <h1>Flashcards</h1>
+        <h1 style={{marginBottom: '5px'}}>Flashcards</h1>
         <p>Create, study, and share flashcard decks.</p>
         <a className="button create-deck-link" href="/create">Create a deck</a>
       </header>
